@@ -1,0 +1,20 @@
+package com.you.donutpay;
+
+import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.MinecraftClient;
+
+public class DonutPayClient implements ClientModInitializer {
+
+    // kept only so the unused PayMenuScreen file still compiles
+    public static final PaymentStore STORE = new PaymentStore();
+
+    @Override
+    public void onInitializeClient() {
+        ChatListener.register();
+    }
+
+    public static void sendPay(MinecraftClient client, String name, double amount) {
+        if (client.player == null) return;
+        client.player.networkHandler.sendChatCommand("pay " + name + " " + Math.round(amount));
+    }
+}
